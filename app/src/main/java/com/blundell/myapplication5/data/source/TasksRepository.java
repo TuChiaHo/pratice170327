@@ -72,14 +72,14 @@ public class TasksRepository implements TasksDataSource{
     }
 
     @Override
-    public void saveTask(@NonNull Task task) {
-        mTasksRemoteDataSource.saveTask(task);
-        mTasksLocalDataSource.saveTask(task);
+    public void saveTask(@NonNull Task task, @NonNull final SaveTaskCallback callback) {
+        mTasksRemoteDataSource.saveTask(task, callback);
+        mTasksLocalDataSource.saveTask(task, callback);
 
         if(mCachedTasks == null){
             mCachedTasks = new LinkedHashMap<>();
         }
-        mCachedTasks.put(task.getId(), task);
+        mCachedTasks.put(task.getmId(), task);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class TasksRepository implements TasksDataSource{
     }
 
     @Override
-    public void deleteAllTasks() {
-
+    public void deleteAllTasks(@NonNull final DeleteAllTasksCallback callback) {
+        mTasksLocalDataSource.deleteAllTasks(callback);
     }
 
     private void getTasksFromRemoteDataSource(@NonNull final LoadTasksCallback callback){
@@ -114,15 +114,20 @@ public class TasksRepository implements TasksDataSource{
         }
         mCachedTasks.clear();
         for (Task task : tasks){
-            mCachedTasks.put(task.getId(), task);
+            mCachedTasks.put(task.getmId(), task);
         }
         mCacheIsDirty = false;
     }
 
     private void refreshLocalDataSource(List<Task> tasks){
-        mTasksLocalDataSource.deleteAllTasks();
+//        mTasksLocalDataSource.deleteAllTasks();
         for (Task task : tasks){
-            mTasksLocalDataSource.saveTask(task);
+            mTasksLocalDataSource.saveTask(task, new SaveTaskCallback() {
+                @Override
+                public void onSuccess() {
+
+                }
+            });
         }
     }
 }

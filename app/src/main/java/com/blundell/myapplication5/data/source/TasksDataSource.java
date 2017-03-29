@@ -19,11 +19,19 @@ public interface TasksDataSource {
         void onDataNotAvailable();
     }
 
+    interface SaveTaskCallback{
+        void onSuccess();
+    }
+
+    interface DeleteAllTasksCallback{
+        void onSuccess();
+    }
+
     void getTasks(@NonNull LoadTasksCallback callback);
 
-    void saveTask(@NonNull Task task);
+    void saveTask(@NonNull Task task, @NonNull SaveTaskCallback callback);
 
-    void deleteAllTasks();
+    void deleteAllTasks(@NonNull DeleteAllTasksCallback callback);
 
     void refreshTasks();
 }

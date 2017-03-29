@@ -20,13 +20,13 @@ public class TasksRemoteDataSource implements TasksDataSource{
 
     private static final int SERVICE_LATENCY_IN_MILLIS = 1000;
 
-    private final static Map<String, Task> TASKS_SERVICE_DATA;
+//    private final static Map<String, Task> TASKS_SERVICE_DATA;
 
-    static {
-        TASKS_SERVICE_DATA = new LinkedHashMap<>(2);
-        addTask("Build tower in Pisa", "Ground looks good, no foundation work required.");
-        addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!");
-    }
+//    static {
+//        TASKS_SERVICE_DATA = new LinkedHashMap<>(2);
+//        addTask("Build tower in Pisa", "Ground looks good, no foundation work required.");
+//        addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!");
+//    }
 
     public static TasksRemoteDataSource getInstance(){
         if(INSTANCE == null){
@@ -35,31 +35,31 @@ public class TasksRemoteDataSource implements TasksDataSource{
         return INSTANCE;
     }
 
-    private static void addTask(String title, String description){
-        Task newTask = new Task(title, description);
-        TASKS_SERVICE_DATA.put(newTask.getId(), newTask);
-    }
+//    private static void addTask(String title, String description){
+//        Task newTask = new Task(title, description);
+//        TASKS_SERVICE_DATA.put(newTask.getId(), newTask);
+//    }
 
     @Override
     public void getTasks(@NonNull final LoadTasksCallback callback) {
         // Simulate network by delaying the execution.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                callback.onTasksLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
-            }
-        }, SERVICE_LATENCY_IN_MILLIS);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                callback.onTasksLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
+//            }
+//        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     @Override
-    public void saveTask(@NonNull Task task) {
-        TASKS_SERVICE_DATA.put(task.getId(), task);
+    public void saveTask(@NonNull Task task, @NonNull SaveTaskCallback callback) {
+//        TASKS_SERVICE_DATA.put(task.getmId(), task);
     }
 
     @Override
-    public void deleteAllTasks() {
-        TASKS_SERVICE_DATA.clear();
+    public void deleteAllTasks(@NonNull DeleteAllTasksCallback callback) {
+//        TASKS_SERVICE_DATA.clear();
     }
 
     @Override
