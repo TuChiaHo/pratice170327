@@ -46,10 +46,10 @@ public class TasksRepository implements TasksDataSource{
     public void getTasks(@NonNull final LoadTasksCallback callback) {
 
         // Respond immediately with cache if available and not dirty
-        if(mCachedTasks != null && !mCacheIsDirty){
-            callback.onTasksLoaded(new ArrayList<Task>(mCachedTasks.values()));
-            return;
-        }
+//        if(mCachedTasks != null && !mCacheIsDirty){
+//            callback.onTasksLoaded(new ArrayList<Task>(mCachedTasks.values()));
+//            return;
+//        }
 
         if(mCacheIsDirty){
             // If the cache is dirty we need to fetch new data from the network.
@@ -59,8 +59,9 @@ public class TasksRepository implements TasksDataSource{
             mTasksLocalDataSource.getTasks(new LoadTasksCallback() {
                 @Override
                 public void onTasksLoaded(List<Task> tasks) {
-                    refreshCache(tasks);
-                    callback.onTasksLoaded(new ArrayList<>(mCachedTasks.values()));
+//                    refreshCache(tasks);
+//                    callback.onTasksLoaded(new ArrayList<>(mCachedTasks.values()));
+                    callback.onTasksLoaded(tasks);
                 }
 
                 @Override

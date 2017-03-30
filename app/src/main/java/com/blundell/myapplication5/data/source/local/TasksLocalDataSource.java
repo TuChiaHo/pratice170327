@@ -3,6 +3,7 @@ package com.blundell.myapplication5.data.source.local;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.test.espresso.core.deps.guava.collect.Lists;
+import android.util.Log;
 
 import com.blundell.myapplication5.data.Task;
 import com.blundell.myapplication5.data.source.TasksDataSource;
@@ -40,6 +41,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     public void getTasks(@NonNull LoadTasksCallback callback) {
         RealmQuery<Task> query = realm.where(Task.class);
         RealmResults<Task> result = query.findAll();
+        Log.e("test", "getTasks "+result.size());
         callback.onTasksLoaded(result);
     }
 
